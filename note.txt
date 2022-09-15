@@ -6,3 +6,15 @@ php artisan make:model Empolyee
 TABLE - CreateEmployees
 
 Columns -id,name, email,phone_no, gender(male,female, others), age
+
+
+URL-POST
+http://127.0.0.1:8000/api/add-empolyee
+
+{
+    "name":"eziz soyunov",
+    "email":"azat@gmail.com",
+    "phone_no":"99363833277",
+    "gender":"male",
+    "age":"34"
+}

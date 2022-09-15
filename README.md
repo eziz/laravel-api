@@ -1,1 +1,1 @@
-good lucl!
+good luck!
