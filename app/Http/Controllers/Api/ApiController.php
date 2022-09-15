@@ -9,7 +9,8 @@ use App\Models\Employee;
 
 class ApiController extends Controller
 {
-    //Create Api -POST
+    //Create Api -POST 
+    //http://127.0.0.1:8000/api/add-employee
     public function createEmployee(Request $request)
     {
         // validation
@@ -21,7 +22,8 @@ class ApiController extends Controller
             "age" => "required"
         ]);
 
-        //create data
+        //Create data
+        //
         $employee = new Employee();
         $employee->name = $request->name;
         $employee->email = $request->email;
@@ -40,6 +42,7 @@ class ApiController extends Controller
     }
 
     // List Api- GET
+    //http://127.0.0.1:8000/api/list-employees
     public function listEmployees()
     {
         $employees = Employee::get();
@@ -50,6 +53,7 @@ class ApiController extends Controller
         ], 200);
     }
     // Single Detail APi  -GET
+    //http://127.0.0.1:8000/api/single-employee/3
     public function getSingleEmployee($id)
     {
         if (Employee::where("id", $id)->exists()) {
@@ -69,6 +73,7 @@ class ApiController extends Controller
         }
     }
     //Update API -PUT
+    //http://127.0.0.1:8000/api/update-employee/2
     public function updateEmployee(Request $request, $id)
     {
         if (Employee::where("id", $id)->exists()) {
@@ -81,7 +86,7 @@ class ApiController extends Controller
             $employee->phone_no = !empty($request->phone_no) ? $request->phone_no : $employee->phone_no;
             $employee->gender = !empty($request->gender) ? $request->gender : $employee->gender;
             $employee->age = !empty($request->age) ? $request->age : $employee->age;
-            
+
             $employee->save();
 
             return response()->json([
@@ -97,7 +102,23 @@ class ApiController extends Controller
         }
     }
     // Delete Api  -DELETE
+    //http://127.0.0.1:8000/api/delete-empolee/30
     public function deleteEmployee($id)
     {
+        if (Employee::where("id", $id)->exists()) {
+
+            $employee = Employee::find($id);
+            $employee->delete();
+
+            return response()->json([
+                "status" => 1,
+                "message" => "Employee deleted successfully"
+            ], 404);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "Employee not found"
+            ], 404);
+        }
     }
 }
